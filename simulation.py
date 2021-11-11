@@ -89,4 +89,71 @@ exploit()
 def eGreedy(e: int):
     pass
 
+import random
+def eGreedy(e: int) -> int:
+    totalHappy = 0
+    percent = e // 100  # e as a percentage
+    day1Happiness = random.normalvariate(9, 3)  # first visit to caf 1
+    day2Happiness = random.normalvariate(7, 5)  # first visit to caf 2
+    day3Happiness = random.normalvariate(11, 7)  # first visit to caf 3
+
+    hap1 = day1Happiness  # hap(1-3) is the variable that tracks the total hap for respective caf
+    hap2 = day2Happiness
+    hap3 = day3Happiness
+    print(hap1, hap2, hap3)
+
+    # next three if/elif/else statments establish the best caf after first three days
+    if day1Happiness > day2Happiness and day1Happiness > day3Happiness:
+        bestCafeteria = "Cafeteria 1"
+        best = day1Happiness
+    elif day2Happiness > day1Happiness and day2Happiness > day3Happiness:
+        bestCafeteria = "Cafeteria 2"
+        best = day2Happiness
+    else:
+        bestCafeteria = "Cafeteria 3"
+        best = day3Happiness
+    print(bestCafeteria, totalHappy)
+    totalHappy += best
+    print(bestCafeteria, totalHappy)
+    
+    for i in range(297):
+        r = random.random()  # generates the random number between 0-1
+        if r < per:  # this if statement is for when you are picking a random caf
+            caf = random.randint(1, 3)
+            if caf == 1:
+                c1Hap = random.normalvariate(9, 3)
+                totalHappy = totalHappy + c1Hap
+                hap1 = hap1 + c1Hap
+            elif caf == 2:
+                c2Hap = random.normalvariate(7, 5)
+                totalHappy = totalHappy + c2Hap
+                hap2 = hap2 + c2Hap
+            elif caf == 3:
+                c3Hap = random.normalvariate(11, 7)
+                totalHappy = totalHappy + c3Hap
+                hap3 = hap3 + c3Hap
+        else:  # this else is running the best caf when r > per (e%)
+            if bestCaf == "c1":
+                c1Hap = random.normalvariate(9, 3)
+                totalHappy = totalHappy + c1Hap
+                hap1 += c1Hap
+            elif bestCaf == "c2":
+                c2Hap = random.normalvariate(7, 5)
+                totalHappy = totalHappy + c2Hap
+                hap2 += c2Hap
+            elif bestCaf == "c3":
+                c3Hap = random.normalvariate(11, 7)
+                totalHappy = totalHappy + c3Hap
+                hap3 += c3Hap
+        if hap1 > hap2 and hap1 > hap3:  # next three if statements resets what the best caf is after each run of the for loop
+            bestCaf = "c1"
+        elif hap2 > hap1 and hap2 > hap3:
+            bestCaf = "c2"
+        elif hap3 > hap2 and hap3 > hap1:
+            bestCaf = "c3"
+    return totalHappy
+
+
+print(eGreedy(12))  # runs eGreedy with 12 percent greedy
+
 
