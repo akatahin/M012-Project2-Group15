@@ -86,12 +86,9 @@ def exploit():
 
 exploit()
 
-import random
+
 def eGreedy(e: int) -> int:
-    totalHappy = 0
-    percent = e // 100 # e as a percentage
-    print(percent, "d")
-    print(100 * random.random())
+    percent = e / 1  # e as a percentage
     day1Happiness = random.normalvariate(9, 3)  # first visit to cafeteria 1
     day2Happiness = random.normalvariate(7, 5)  # first visit to cafeteria 2
     day3Happiness = random.normalvariate(11, 7)  # first visit to cafeteria 3
@@ -100,25 +97,41 @@ def eGreedy(e: int) -> int:
     happy1 = day1Happiness
     happy2 = day2Happiness
     happy3 = day3Happiness
-    print(happy1, happy2, happy3)
+
+    print("Starting Happiness Rating of Cafe (1-3):\t", happy1, happy2, happy3)
     day1, day2, day3 = 1, 1, 1
 
+    # ignore h, v - just to check
+    h = 0
+    v = 0
+
+    # for loop that checks rating for rest of the 297 days
     for i in range(297):
-        randomValue = random.random()
+        # generates the random float between 0-1
+        randomValue = random.random() * 100
+
+        # this conditional statement checks if random percentage is -
+        # less then e percentage and chooses a random cafeteria
         if randomValue < percent:
-            cafeteria = random.randint(1,3)
-            print(randomValue)
+            # choses a random cafeteria (1-3)
+            cafeteria = random.randint(1, 3)
+            v += 1
+
+        # this conditional statement checks for the best rated cafeteria and assigns cafeteria to the number
         else:
+
             if day1Happiness > day2Happiness and day1Happiness > day3Happiness:
-                bestCafeteria = "Cafeteria 1"
                 cafeteria = 1
+
             elif day2Happiness > day1Happiness and day2Happiness > day3Happiness:
-                bestCafeteria = "Cafeteria 2"
                 cafeteria = 2
+
             else:
-                bestCafeteria = "Cafeteria 3"
                 cafeteria = 3
 
+            h += 1
+
+        # This conditional statement checks cafeteria number and adds a day and rating
         if cafeteria == 1:
             happy1 += random.normalvariate(9, 3)
             day1 += 1
@@ -131,11 +144,18 @@ def eGreedy(e: int) -> int:
             happy3 += random.normalvariate(11, 7)
             day3 += 1
 
+        # averages rating for each cafe formula = (happiness/days)
         day1Happiness = happy1 / day1
         day2Happiness = happy2 / day2
         day3Happiness = happy3 / day3
-    total = happy1 + happy2 + happy3
-    return total
 
-print(eGreedy(12))
+    print("Picked cafe:", h, "  ||  ", "Random cafe:", v)
+    print("Average Happiness Rating of Cafe (1-3): \t", day1Happiness, day2Happiness, day3Happiness)
 
+    totalHappy = happy1 + happy2 + happy3
+    print("\n\nTotal Happiness of 300 days:", totalHappy)
+
+    return totalHappy
+
+
+eGreedy(12)
