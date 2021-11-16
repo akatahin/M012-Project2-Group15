@@ -1,7 +1,7 @@
 import random
 
 
-def explore():
+def exploreOnly():
     count = 0
     for i in range(100):  # 100 trials
         C1 = 9  # cafeteria 1 AVG Hapiness
@@ -26,16 +26,13 @@ def explore():
 
 
     sum = count + count2 + count3  # adding all of the total hapiness from 3 cafertias
-    #print("Sum Explore: ")
-    #print(sum)
     return sum  # returns total hapiness
 
 
 
 
-def exploit():
-    #print("----------------------------")
-    total = 0
+def exploitOnly():
+    total = 0 #initializing total
 
     C1 = 9
     SD = 3
@@ -70,8 +67,6 @@ def exploit():
     for i in range(297):
         p = (random.normalvariate(A, SD))
         total = total + p
-    #print("Sum Exploit: ")
-    #print(total)
     return total
 
 
@@ -155,14 +150,14 @@ def simulation(e: int, t: int):
     greedyResult = 0
 
     for i in range(t):
-        exploitResult += exploit()
-        exploreResult += explore()
+        exploitResult += exploitOnly()
+        exploreResult += exploreOnly()
         greedyResult += eGreedy(e)
     exploreResult /= t
     exploitResult /= t
     greedyResult /= t
 
-    Averages = {"C1": 9, "C2": 7, "C3": 11}
+    Averages = {"C1": 9, "C2": 7, "C3": 11} #dictionary of
 
     Values = Averages.values()
 
@@ -173,11 +168,11 @@ def simulation(e: int, t: int):
 
     optimumHappiness = maxVal * 300
 
-    expectedHappiness = (Averages['C1'] * 100 + Averages['C2'] * 100 + Averages['C3'] * 100)
+    expectedHappiness = (Averages['C1'] * 100 + Averages['C2'] * 100 + Averages['C3'] * 100) #expected hapiness for explore method
 
-    expectedHappiness2 = (Averages['C1'] + Averages['C2'] + Averages['C3']) + (297 * maxVal)
+    expectedHappiness2 = (Averages['C1'] + Averages['C2'] + Averages['C3']) + (297 * maxVal) #expected hapiness for exploit method
 
-    expectedHappiness3 = (Averages['C1'] * 264 + Averages['C1'] * 12 + Averages['C2'] * 12 + Averages['C2'] * 12)
+    expectedHappiness3 = (Averages['C1'] * 264 + Averages['C1'] * 12 + Averages['C2'] * 12 + Averages['C2'] * 12) #expected hapiness for eGreedy method
 
 
 
@@ -207,4 +202,4 @@ def simulation(e: int, t: int):
     print("Simulated Regret: " + str(optimumHappiness - greedyResult))
 
 
-simulation(12, 10)
+simulation(12, 100)
